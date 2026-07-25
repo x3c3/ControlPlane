@@ -20,8 +20,10 @@ all: build install
 
 ## Build for arm64 and x86_64, then lipo into universal binaries
 build:
-	$(SWIFT) build -c $(CONFIG) --arch arm64  --product ControlPlane --product cpctl
-	$(SWIFT) build -c $(CONFIG) --arch x86_64 --product ControlPlane --product cpctl
+	$(SWIFT) build -c $(CONFIG) --arch arm64  --product ControlPlane
+	$(SWIFT) build -c $(CONFIG) --arch arm64  --product cpctl
+	$(SWIFT) build -c $(CONFIG) --arch x86_64 --product ControlPlane
+	$(SWIFT) build -c $(CONFIG) --arch x86_64 --product cpctl
 	@mkdir -p $(UNIV_DIR)
 	lipo -create $(BIN_ARM)/ControlPlane $(BIN_X86)/ControlPlane -output $(UNIV_DIR)/ControlPlane
 	lipo -create $(BIN_ARM)/cpctl        $(BIN_X86)/cpctl        -output $(UNIV_DIR)/cpctl
